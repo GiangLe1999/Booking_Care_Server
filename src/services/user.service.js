@@ -1,6 +1,10 @@
 import db from "../models";
 import * as bcrypt from "bcrypt";
 
+const findUserConfiguration = {
+  attributes: { exclude: ["password"] },
+};
+
 const findUserByEmail = async (email) => {
   const user = await db.User.findOne({
     where: { email },
@@ -34,4 +38,28 @@ export const userLoginHandler = async (email, password) => {
     ok: true,
     user: { email: existedUser.email, roleId: existedUser.roleId },
   };
+};
+
+export const getAllUsers = async () => {
+  try {
+    const users = await db.User.findAll(findUserConfiguration);
+    return { ok: true, users };
+  } catch (error) {
+    return { ok: false, error };
+  }
+};
+
+export const getUserById = async (id) => {
+  try {
+    if (!id) {
+      return { ok: false, error: "Missing required parameter id" };
+    }
+
+    const user = await db.User.findOne({
+      where: { id },
+      ...findUserConfiguration,
+    });
+
+    return { ok: true, user };
+  } catch (error) {}
 };

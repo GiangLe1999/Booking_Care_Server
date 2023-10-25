@@ -26,7 +26,7 @@ export const createUser = async (formData) => {
 };
 
 export const getAllUser = async () => {
-  return await db.User.findAll({ raw: true });
+  return await db.User.findAll();
 };
 
 export const getUserById = async (userId) => {
