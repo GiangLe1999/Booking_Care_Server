@@ -1,8 +1,11 @@
 import {
+  createUser,
+  deleteUser,
+  editUser,
   getAllUsers,
   getUserById,
   userLoginHandler,
-} from "../services/user.service";
+} from "../service/user.service";
 
 export const loginHandler = async (req, res) => {
   try {
@@ -33,6 +36,30 @@ export const getAllUsersHandler = async (req, res) => {
 export const getUserHandler = async (req, res) => {
   try {
     res.status(200).json(await getUserById(req.params.id));
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+};
+
+export const createUserHandler = async (req, res) => {
+  try {
+    res.status(201).json(await createUser(req.body));
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+};
+
+export const editUserHandler = async (req, res) => {
+  try {
+    res.status(200).json(await editUser(req.body));
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+};
+
+export const deleteUserHandler = async (req, res) => {
+  try {
+    res.status(200).json(await deleteUser(req.params.id));
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
   }

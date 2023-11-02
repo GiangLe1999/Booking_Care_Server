@@ -1,27 +1,24 @@
 import express from "express";
-import viewEngine from "./config/view-engine";
 import cors from "cors";
 import { connectDB } from "./config/connect-db";
-import crudRouter from "./routes/crud.route";
 import userRouter from "./routes/user.route";
+import allCodesRouter from "./routes/allcodes.route";
+import doctorRouter from "./routes/doctor.route";
 require("dotenv").config();
 
 const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: [process.env.REACT_APP_FRONTEND_URL],
     credentials: true,
   })
 );
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 
-viewEngine(app);
-
-app.use("/api", userRouter);
-app.use("/", crudRouter);
+app.use("/api", userRouter, allCodesRouter, doctorRouter);
 
 connectDB();
 
