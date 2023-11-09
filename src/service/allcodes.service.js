@@ -22,11 +22,15 @@ export const getCodesByType = async (rawType) => {
       type !== "STATUS" &&
       type !== "TIME" &&
       type !== "POSITION" &&
-      type !== "GENDER"
+      type !== "GENDER" &&
+      type !== "PRICE" &&
+      type !== "PAYMENT" &&
+      type !== "PROVINCE"
     ) {
       return {
         ok: false,
-        error: "Type must be: 'role', 'status', 'time', 'position' or 'gender'",
+        error:
+          "Type must be: 'role', 'status', 'time', 'position', 'gender', 'price', 'payment' or 'province'",
       };
     }
 
