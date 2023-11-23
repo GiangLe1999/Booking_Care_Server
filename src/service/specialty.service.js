@@ -26,6 +26,17 @@ export const getAllSpecialties = async () => {
   }
 };
 
+export const getHomeSpecialties = async () => {
+  try {
+    const specialties = await db.Specialty.findAll({
+      attributes: ["name", "image", "id"],
+    });
+    return { ok: true, specialties };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  }
+};
+
 export const getSpecialtyById = async (id) => {
   try {
     if (!id) {

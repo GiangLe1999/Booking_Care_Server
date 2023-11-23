@@ -9,21 +9,7 @@ export const getTopDoctors = async (limit = 10) => {
     const doctors = await db.User.findAll({
       limit: +limit,
       where: { roleId: "R2" },
-      order: [["createdAt", "DESC"]],
-      include: [
-        {
-          model: db.Allcode,
-          as: "positionData",
-          attributes: ["valueEn", "valueVi"],
-        },
-        {
-          model: db.Allcode,
-          as: "genderData",
-          attributes: ["valueEn", "valueVi"],
-        },
-      ],
-      raw: true,
-      nest: true,
+      attributes: ["id", "image", "lastName", "firstName"],
     });
 
     return { doctors, ok: true };

@@ -1,12 +1,21 @@
 import {
   createSpecialty,
   getAllSpecialties,
+  getHomeSpecialties,
   getSpecialtyById,
 } from "../service/specialty.service";
 
 export const getAllSpecialtiesHandler = async (req, res) => {
   try {
     res.status(200).json(await getAllSpecialties());
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+};
+
+export const getHomeSpecialtiesHandler = async (req, res) => {
+  try {
+    res.status(200).json(await getHomeSpecialties());
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
   }

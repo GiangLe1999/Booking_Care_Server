@@ -34,6 +34,17 @@ export const getAllClinics = async () => {
   }
 };
 
+export const getHomeClinics = async () => {
+  try {
+    const clinics = await db.Clinic.findAll({
+      attributes: ["name", "id", "logo"],
+    });
+    return { ok: true, clinics };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  }
+};
+
 export const getClinicById = async (id) => {
   try {
     if (!id) {
