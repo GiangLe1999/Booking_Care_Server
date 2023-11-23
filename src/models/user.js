@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
       User.hasOne(models.Doctor_Info, {
         foreignKey: "doctorId",
       });
+      User.hasOne(models.Booking, {
+        foreignKey: "patientId",
+      });
     }
   }
   User.init(
@@ -32,6 +35,7 @@ module.exports = (sequelize, DataTypes) => {
       image: DataTypes.BLOB,
       roleId: DataTypes.STRING,
       phoneNumber: DataTypes.STRING,
+      dateOfBirth: DataTypes.STRING,
       positionId: DataTypes.STRING,
     },
     {

@@ -4,7 +4,7 @@ import * as bcrypt from "bcrypt";
 const getUserByEmail = async (email) => {
   const user = await db.User.findOne({
     where: { email },
-    attributes: ["email", "roleId", "password"],
+    attributes: ["email", "roleId", "password", "id"],
   });
   return user;
 };
@@ -32,7 +32,11 @@ export const userLoginHandler = async (email, password) => {
 
   return {
     ok: true,
-    user: { email: existedUser.email, roleId: existedUser.roleId },
+    user: {
+      email: existedUser.email,
+      roleId: existedUser.roleId,
+      id: existedUser.id,
+    },
   };
 };
 

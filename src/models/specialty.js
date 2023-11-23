@@ -7,8 +7,8 @@ module.exports = (sequelize, DataTypes) => {
   Specialty.init(
     {
       name: DataTypes.STRING,
-      description: DataTypes.TEXT,
-      image: DataTypes.STRING,
+      description: DataTypes.TEXT("long"),
+      image: DataTypes.BLOB,
     },
     {
       sequelize,
