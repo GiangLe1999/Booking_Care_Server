@@ -37,3 +37,33 @@ export const getHomeLonglives = async () => {
     return { ok: false, error: error.message };
   }
 };
+
+export const getLongliveBySlug = async ({ slug }) => {
+  try {
+    if (!slug) {
+      return { ok: false, error: "Missing required parameter" };
+    }
+    const longlive = await db.Longlive.findOne({
+      where: { slug },
+      attributes: [
+        "title",
+        "thumbnail",
+        "id",
+        "slug",
+        "content",
+        "description",
+      ],
+      include: [
+        {
+          model: db.User,
+          attributes: ["firstName", "lastName"],
+        },
+      ],
+      raw: true,
+      nest: true,
+    });
+    return { ok: true, article: longlive };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  }
+};

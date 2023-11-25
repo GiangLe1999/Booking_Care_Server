@@ -37,3 +37,33 @@ export const getHomeTips = async () => {
     return { ok: false, error: error.message };
   }
 };
+
+export const getTipBySlug = async ({ slug }) => {
+  try {
+    if (!slug) {
+      return { ok: false, error: "Missing required parameter" };
+    }
+    const tip = await db.Tip.findOne({
+      where: { slug },
+      attributes: [
+        "title",
+        "thumbnail",
+        "id",
+        "slug",
+        "content",
+        "description",
+      ],
+      include: [
+        {
+          model: db.User,
+          attributes: ["firstName", "lastName"],
+        },
+      ],
+      raw: true,
+      nest: true,
+    });
+    return { ok: true, article: tip };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  }
+};
