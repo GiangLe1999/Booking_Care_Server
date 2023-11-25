@@ -7,6 +7,9 @@ import doctorRouter from "./routes/doctor.route";
 import patientRouter from "./routes/patient.route";
 import specialtyRouter from "./routes/specialty.route";
 import clinicRouter from "./routes/clinic.route";
+import handbookRouter from "./routes/hanbook.route";
+import longliveRouter from "./routes/longlive.route";
+import tipRouter from "./routes/tip.route";
 
 require("dotenv").config();
 
@@ -29,7 +32,10 @@ app.use(
   doctorRouter,
   patientRouter,
   specialtyRouter,
-  clinicRouter
+  clinicRouter,
+  handbookRouter,
+  longliveRouter,
+  tipRouter
 );
 
 connectDB();
