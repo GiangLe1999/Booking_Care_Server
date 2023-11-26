@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import db from "../models";
 
 export const createLonglive = async (data) => {
@@ -63,6 +64,23 @@ export const getLongliveBySlug = async ({ slug }) => {
       nest: true,
     });
     return { ok: true, article: longlive };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  }
+};
+
+export const getLongliveResults = async ({ query }) => {
+  try {
+    const longlives = await db.Longlive.findAll({
+      where: {
+        title: {
+          [Op.iLike]: `%${query}%`,
+        },
+      },
+      attributes: ["title", "thumbnail", "id", "slug"],
+    });
+
+    return { ok: true, articles: longlives };
   } catch (error) {
     return { ok: false, error: error.message };
   }

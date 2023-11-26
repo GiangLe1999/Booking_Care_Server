@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import db from "../models";
 
 export const createTip = async (data) => {
@@ -63,6 +64,23 @@ export const getTipBySlug = async ({ slug }) => {
       nest: true,
     });
     return { ok: true, article: tip };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  }
+};
+
+export const getTipResults = async ({ query }) => {
+  try {
+    const tips = await db.Tip.findAll({
+      where: {
+        title: {
+          [Op.iLike]: `%${query}%`,
+        },
+      },
+      attributes: ["title", "thumbnail", "id", "slug"],
+    });
+
+    return { ok: true, articles: tips };
   } catch (error) {
     return { ok: false, error: error.message };
   }

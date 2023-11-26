@@ -1,6 +1,7 @@
 import {
   createHandbook,
   getHanbookBySlug,
+  getHandbookResults,
   getHomeHandbooks,
 } from "../service/handbook.service";
 
@@ -23,6 +24,14 @@ export const getHomeHandbooksHandler = async (req, res) => {
 export const getHandbookBySlugHandler = async (req, res) => {
   try {
     res.status(200).json(await getHanbookBySlug(req.query));
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+};
+
+export const getHandbookResultsHandler = async (req, res) => {
+  try {
+    res.status(200).json(await getHandbookResults(req.query));
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
   }

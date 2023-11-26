@@ -1,3 +1,4 @@
+import { Op } from "sequelize";
 import db from "../models";
 
 export const createHandbook = async (data) => {
@@ -63,6 +64,23 @@ export const getHanbookBySlug = async ({ slug }) => {
       nest: true,
     });
     return { ok: true, article: hanbook };
+  } catch (error) {
+    return { ok: false, error: error.message };
+  }
+};
+
+export const getHandbookResults = async ({ query }) => {
+  try {
+    const handbooks = await db.Handbook.findAll({
+      where: {
+        title: {
+          [Op.iLike]: `%${query}%`,
+        },
+      },
+      attributes: ["title", "thumbnail", "id", "slug"],
+    });
+
+    return { ok: true, articles: handbooks };
   } catch (error) {
     return { ok: false, error: error.message };
   }

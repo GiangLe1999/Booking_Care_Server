@@ -2,6 +2,7 @@ import {
   createLonglive,
   getHomeLonglives,
   getLongliveBySlug,
+  getLongliveResults,
 } from "../service/longlive.service";
 
 export const createLongliveHandler = async (req, res) => {
@@ -23,6 +24,14 @@ export const getHomeLonglivesHandler = async (req, res) => {
 export const getLongliveBySlugHandler = async (req, res) => {
   try {
     res.status(200).json(await getLongliveBySlug(req.query));
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+};
+
+export const getLongliveResultsHandler = async (req, res) => {
+  try {
+    res.status(200).json(await getLongliveResults(req.query));
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
   }
