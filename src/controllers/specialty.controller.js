@@ -2,6 +2,7 @@ import {
   createSpecialty,
   getAllSpecialties,
   getHomeSpecialties,
+  getSearchResults,
   getSpecialtyById,
 } from "../service/specialty.service";
 
@@ -16,6 +17,14 @@ export const getAllSpecialtiesHandler = async (req, res) => {
 export const getHomeSpecialtiesHandler = async (req, res) => {
   try {
     res.status(200).json(await getHomeSpecialties());
+  } catch (error) {
+    res.status(500).json({ ok: false, error: error.message });
+  }
+};
+
+export const getSearchResultsHandler = async (req, res) => {
+  try {
+    res.status(200).json(await getSearchResults(req.query));
   } catch (error) {
     res.status(500).json({ ok: false, error: error.message });
   }

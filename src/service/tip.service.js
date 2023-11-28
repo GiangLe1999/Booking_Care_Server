@@ -77,7 +77,14 @@ export const getTipResults = async ({ query }) => {
           [Op.iLike]: `%${query}%`,
         },
       },
-      attributes: ["title", "thumbnail", "id", "slug"],
+      attributes: [
+        "title",
+        "thumbnail",
+        "id",
+        "slug",
+        "createdAt",
+        "updatedAt",
+      ],
     });
 
     return { ok: true, articles: tips };
