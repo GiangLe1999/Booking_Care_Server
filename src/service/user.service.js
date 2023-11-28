@@ -1,5 +1,7 @@
 import db from "../models";
 import * as bcrypt from "bcrypt";
+import * as jwt from "jsonwebtoken";
+require("dotenv").config();
 
 const getUserByEmail = async (email) => {
   const user = await db.User.findOne({
@@ -30,6 +32,8 @@ export const userLoginHandler = async (email, password) => {
     };
   }
 
+  const token = jwt.sign({ id: existedUser.id }, process.env.TOKEN_SECRET_KEY);
+
   return {
     ok: true,
     user: {
@@ -37,6 +41,7 @@ export const userLoginHandler = async (email, password) => {
       roleId: existedUser.roleId,
       id: existedUser.id,
     },
+    token,
   };
 };
 
@@ -92,7 +97,7 @@ export const createUser = async (formData) => {
 
     return { ok: true };
   } catch (error) {
-    return { ok: false, error: "Could not create user" };
+    return { ok: false, error: error.message };
   }
 };
 
